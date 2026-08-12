@@ -19,6 +19,20 @@ The validator checks:
 
 ## Behavioral pressure scenarios
 
-`pressure-scenarios.md` defines discipline tests for authorization, evidence conflicts, scope creep, protected assets, frozen capabilities, verification pressure, and release regression.
+`pressure-scenarios.md` defines discipline tests for:
+
+- authorization and protected actions;
+- evidence conflicts and unresolved scope;
+- frozen capabilities and scope creep;
+- verification and cumulative release regression;
+- explicit retirement vs stale specs/tests;
+- canonical identity vs historical source labels;
+- settlement evidence vs transaction meaning;
+- duplicate economic-event prevention;
+- typed adjustment preservation;
+- traceable evidence consolidation and sensitive exclusions;
+- dependency-first reconstruction of a damaged core;
+- delivery-first closure and single-candidate convergence;
+- avoiding implicit business defaults.
 
 For runtimes with fresh-agent/subagent test support, run each scenario both without the skill (baseline) and with the skill loaded, then compare decisions against the expected behavior. A structural PASS does not substitute for runtime behavioral testing.
