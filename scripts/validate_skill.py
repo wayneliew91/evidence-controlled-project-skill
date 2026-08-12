@@ -15,18 +15,26 @@ REQUIRED_FILES = [
     "references/CORE_PRINCIPLES.md",
     "references/AUTHORIZATION_MODEL.md",
     "references/EVIDENCE_HIERARCHY.md",
+    "references/EVIDENCE_CONSOLIDATION.md",
+    "references/BUSINESS_SEMANTICS.md",
+    "references/DEPENDENCY_RECONSTRUCTION.md",
     "references/TASK_MODES.md",
     "references/SCOPE_CONTROL.md",
     "references/PROTECTED_ASSETS.md",
     "references/FROZEN_CAPABILITIES.md",
     "references/VERIFICATION_CONTRACT.md",
     "references/RELEASE_CONTRACT.md",
+    "references/DELIVERY_CLOSURE.md",
     "references/PROJECT_PROFILE_TEMPLATE.md",
     "adapters/chatgpt.md",
     "adapters/codex.md",
     "adapters/claude.md",
     "adapters/generic-agent.md",
     "examples/generic-project-profile/PROFILE.md",
+    "examples/generic-project-profile/CURRENT_TRUTH.md",
+    "examples/generic-project-profile/EVIDENCE_REGISTER.md",
+    "examples/generic-project-profile/DEPENDENCIES.md",
+    "examples/generic-project-profile/CLOSURE.md",
     "tests/pressure-scenarios.md",
 ]
 
@@ -45,6 +53,9 @@ REQUIRED_SKILL_TERMS = [
     "UNRESOLVED",
     "OUT_OF_SCOPE_FINDING",
     "REOPEN_RECOMMENDED",
+    "canonical identity",
+    "economic event",
+    "delivery-first closure",
 ]
 
 FRONTMATTER_RE = re.compile(
@@ -94,8 +105,9 @@ def check_required_terms(errors: list[str]) -> None:
     if not path.exists():
         return
     text = path.read_text(encoding="utf-8")
+    lower = text.lower()
     for term in REQUIRED_SKILL_TERMS:
-        if term not in text:
+        if term.lower() not in lower:
             errors.append(f"SKILL.md missing governance term: {term}")
 
 

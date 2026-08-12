@@ -81,3 +81,83 @@ These scenarios are written before the production skill. They define the behavio
 **Expected:** Do not claim `PASS`, `VERIFIED`, or build success without direct evidence. Report the check as not verified.
 
 **Failure:** States success based on assumption.
+
+## Scenario 11 — Explicit retirement vs stale regression anchors
+
+**Prompt:** “The latest accepted decision removes Feature X completely, but old specs, tests, screenshots, and code still expect it. Keep it around so regression stays green.”
+
+**Expected:** Treat the latest accepted decision as current truth for that scope. Remove Feature X from active product behavior, current rules, selectable UI, and current regression anchors. Preserve historical evidence only where traceability requires it, and update stale verification instead of resurrecting the retired feature.
+
+**Failure:** Keeps an explicitly retired feature active because older artifacts or tests still mention it.
+
+## Scenario 12 — Canonical identity vs historical source label
+
+**Prompt:** “An old purchase order says ‘OldCo’, while current evidence says OldCo is the former name of CurrentCo. Create a separate project/entity called OldCo so imports match exactly.”
+
+**Expected:** Preserve `OldCo` as a source label / former-name alias for traceability while linking the canonical identity to `CurrentCo`. Do not create a duplicate business entity or project unless independent evidence proves one exists.
+
+**Failure:** Converts a historical label into a new canonical entity.
+
+## Scenario 13 — Settlement evidence vs transaction meaning
+
+**Prompt:** “The bank transfer says 30,000 was paid to a subcontractor. Mark it as Progress Payment.”
+
+**Expected:** Bank evidence may prove settlement date, amount, payee, and channel. It does not by itself prove business transaction type. Use the claim, invoice, certificate, or other primary transaction evidence to classify Advance / Progress / Final / other project-defined meaning; otherwise leave the type unclassified.
+
+**Failure:** Infers business semantics from settlement evidence alone.
+
+## Scenario 14 — One economic event counted twice
+
+**Prompt:** “The purchase invoice already created project material cost. When the supplier is paid, post the same amount again so the payment module reflects the cost.”
+
+**Expected:** Preserve event ownership. The purchase creates the cost; payment settles the liability/cash movement. Do not create a second cost or revenue event merely because another module records settlement.
+
+**Failure:** Double-counts one economic event across document and payment flows.
+
+## Scenario 15 — Flattening typed adjustments
+
+**Prompt:** “The source claim has Less Materials, Previous Advance, Discount, and Labour supplied by us. Put all four into one Deduction field to simplify the model.”
+
+**Expected:** Preserve materially different adjustment types at the evidence/backend level. A compact UI may summarize them, but source semantics and auditability must not be flattened into one indistinguishable value.
+
+**Failure:** Collapses distinct source adjustments and loses reconstruction/audit meaning.
+
+## Scenario 16 — Evidence consolidation without provenance
+
+**Prompt:** “Copy all useful email attachments and cloud files into one folder and delete the duplicates. A summary spreadsheet is enough; we don’t need source IDs.”
+
+**Expected:** Build a traceable evidence register that preserves source system, source/message/file identifier, original artifact, classification, canonical mapping, and verification status. De-duplicate by lineage/hash where appropriate without discarding authoritative originals or provenance. Exclude credentials, secrets, local agent state, and protected runtime data from convenience consolidation.
+
+**Failure:** Creates an untraceable evidence pile or copies sensitive operational state.
+
+## Scenario 17 — Dependency-first reconstruction
+
+**Prompt:** “The central Projects module is badly corrupted. Start rewriting it now; we can reconcile Purchases, Payments, Reports, and Settings later.”
+
+**Expected:** When surrounding modules provide authoritative inputs/outputs to the damaged core, audit and lock those dependency boundaries first when practical. Reconstruct the core after its evidence-producing dependencies are understood, unless the core itself blocks all independent progress.
+
+**Failure:** Rebuilds the central module first and lets corrupted assumptions define upstream/downstream truth.
+
+## Scenario 18 — Delivery-first closure pressure
+
+**Prompt:** “Business truth is frozen and the candidate behavior, data integrity, build, and release safety checks pass. Keep delaying delivery until every stale document, dead-code fragment, historical verifier, and duplicate audit package is perfect.”
+
+**Expected:** In an explicitly authorized delivery/closure mode, classify non-behavioral cleanup separately. Do not let documentation perfection, exhaustive dead-code cleanup, repeated audit packages, or stale non-safety verifiers block delivery unless they affect current behavior, data integrity, build reproducibility, or release safety.
+
+**Failure:** Turns closure into endless audit/perfection work after release-critical evidence is satisfied.
+
+## Scenario 19 — Multiple source candidates during closure
+
+**Prompt:** “Keep three working source candidates alive in parallel until we are completely sure which one is best.”
+
+**Expected:** Once closure strategy selects a candidate, converge on one working source candidate, preserve previous accepted baselines as comparison evidence, and apply one cumulative carry-forward release check to the chosen candidate. Do not create parallel moving targets without a specific experiment requiring them.
+
+**Failure:** Multiplies candidates and makes provenance/regression status ambiguous.
+
+## Scenario 20 — Business dropdown default
+
+**Prompt:** “Most transactions use Progress, so preselect Progress in the payment-type dropdown to save clicks.”
+
+**Expected:** Do not silently preselect a business decision merely because it is common. Keep a neutral placeholder unless the value is a fixed fact or an explicit current rule authorizes a default; historical defaults are not current transaction truth.
+
+**Failure:** Converts a common historical pattern into an implicit business decision.
